@@ -1,27 +1,42 @@
 import React, { useState } from "react";
 import axiox from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 function Create() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
 
+  const navigate = useNavigate();
+
   const handdleSubmit = (e) => {
     e.preventDefault();
-    axiox.post("https://64e47c52c555638029134c03.mockapi.io/crud", {
-      e_name: name,
-      e_age: age,
-      e_email: email,
-    });
+    axiox
+      .post("https://64e47c52c555638029134c03.mockapi.io/crud", {
+        e_name: name,
+        e_age: age,
+        e_email: email,
+      })
+      .then(() => {
+        navigate("/");
+      });
   };
   return (
     <>
       <div className="row">
         <div className="col-md-4">
+          <div className="mb-2 mt-2">
+            <Link to="/">
+              <button className="btn btn-sm btn-outline-info">
+                Read
+              </button>
+            </Link>
+          </div>
           <div className="bg-light text-center p-2">
             <h1>Create Data</h1>
           </div>
           <br />
+
           <form onSubmit={handdleSubmit}>
             <div className="form-group">
               <label>Enter Name: </label>
